@@ -11,4 +11,5 @@ public interface UserDao {
     User selectByUsername(String username);//通过username查询用户
     User selectByEmail(String email);//通过email查询用户
     User selectByTelephone(String telephone);//通过手机号查询用户
+    User selectByUsernameOrEmailOrTelephone(String username,String email,String telephone);
 }

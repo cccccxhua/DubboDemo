@@ -1,0 +1,6 @@
+com\timor\controller\OrderController.class
+com\timor\controller\UserController.class
+com\timor\advice\GlobalExceptionHandler.class
+com\timor\domain\ValidError.class
+com\timor\service\OrderService.class
+com\timor\ConsumerApplication.class

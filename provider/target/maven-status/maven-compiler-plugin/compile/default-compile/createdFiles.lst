@@ -1,0 +1,4 @@
+com\timor\service\UserServiceImpl.class
+com\timor\service\UserDaoImpl.class
+com\timor\ProviderApplication.class
+com\timor\service\RegisterImpl.class

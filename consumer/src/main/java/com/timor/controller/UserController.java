@@ -6,11 +6,11 @@ import com.timor.service.UserDao;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,19 +40,33 @@ public class UserController {
         return "/register";
     }
     @PostMapping(value = "/register")
-    public String register(Model model , User user){
-        Map<String, Object> map = register.register(user);
-        if(map.isEmpty() || map==null) {
-            //成功
-            return "/success";
-        }else{
-            //失败
+    public String register(@Valid User user,BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            for(ObjectError error:errors){
+                String message = error.getDefaultMessage();
+                switch (message){
+                    case "usernameMsg":
+                        model.addAttribute("usernameMsg", "账号不能为空！");
+                        return "/register";
+                    case "passwordMsg":
+                        model.addAttribute("passwordMsg", "密码必须是8-16个字符，至少1个大写字母，1个小写字母和1个数字,不能包含特殊字符！");
+                        return "/register";
+                    case "phoneMsg":
+                        model.addAttribute("phoneMsg", "请输入正确的手机号");
+                        return "/register";
+                    case "emailMsg":
+                        model.addAttribute("emailMsg", "请输入正确的邮箱");
+                        return "/register";
+                }
+            }
+        }
+        Map<String, Object> map = this.register.register(user);
+        if(map!=null){
             model.addAttribute("usernameMsg", map.get("usernameMsg"));
-            model.addAttribute("passwordMsg", map.get("passwordMsg"));
-            model.addAttribute("emailMsg", map.get("emailMsg"));
-            model.addAttribute("phoneMsg", map.get("phoneMsg"));
             return "/register";
         }
+        return "/success";
     }
 
 

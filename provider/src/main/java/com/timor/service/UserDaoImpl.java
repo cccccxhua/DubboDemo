@@ -32,5 +32,11 @@ public class UserDaoImpl implements UserDao{
         return null;
     }
 
+    @Override
+    public User selectByUsernameOrEmailOrTelephone(String username, String email, String telephone) {
+        //写sql通过OR来判断是否有不满足要求的情况，有就查询失败，return user;
+        return null;
+    }
+
 
 }

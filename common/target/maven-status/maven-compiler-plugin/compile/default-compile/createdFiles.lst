@@ -1,0 +1,4 @@
+com\timor\service\Register.class
+com\timor\service\UserService.class
+com\timor\service\UserDao.class
+com\timor\domain\User.class
